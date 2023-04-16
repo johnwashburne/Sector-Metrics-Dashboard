@@ -21,6 +21,12 @@ def get_ticker_data(
             data[ticker].append(agg.close)
             dates.append(date.fromtimestamp(agg.timestamp // 1000))
 
+    min_length = min([len(v) for k, v in data.items()])
+    for ticker in data.keys():
+        data[ticker] = data[ticker][-min_length:]
+
+    dates = dates[-min_length:]
+
     df = pd.DataFrame.from_dict(data)
     df["Dates"] = dates
     df = df.set_index("Dates")
