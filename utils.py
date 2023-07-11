@@ -56,9 +56,9 @@ def get_ticker_data(
 
     # collect price data
     data: dict[str, list[float]] = {}
-    dates: list[date] = list()
+    dates: list[date] = []
     for ticker in tickers:
-        data[ticker] = list()
+        data[ticker] = []
         dates.clear()
         for agg in client.get_aggs(
             ticker, multiplier=1, timespan="day", from_=start, to=end
@@ -101,7 +101,7 @@ def get_holdings_by_sector() -> dict[str, list[str]]:
     ).text
 
     # consumer discretionary is first sector on table
-    holdings_by_sector = {"Consumer Discretionary": list()}
+    holdings_by_sector = {"Consumer Discretionary": []}
     current_sector = "Consumer Discretionary"
 
     skipped = False
@@ -117,9 +117,9 @@ def get_holdings_by_sector() -> dict[str, list[str]]:
             continue
         else:
             current_sector = row[0]
-            holdings_by_sector[current_sector] = list()
+            holdings_by_sector[current_sector] = []
 
-    to_remove = list()
+    to_remove = []
     for key in holdings_by_sector.keys():
         if key not in sectors_and_indices.keys():
             to_remove.append(key)
